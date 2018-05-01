@@ -46,3 +46,29 @@ void individual::init()
     for(int i = 0; i < genes; i++)
         printf("gene %d: %d\n", i, genes[i]);  
 }
+
+population::population(int n_genes, int n_pop)
+{
+    num_pop = n_pop;
+    num_genes = n_genes;
+    pop = new individual[n];
+    init();
+}
+
+population::~population()
+{
+    if(pop)
+        for(int i = 0; i < n; i++)
+            if(pop[i])
+                delete pop[i];
+    if(pop)
+        delete pop;   
+}
+
+population::init()
+{
+    for(int i = 0; i < n; i++)
+    {
+        pop[i] = new individual(num_genes);
+    }
+}
