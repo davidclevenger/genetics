@@ -1,4 +1,4 @@
-CC = g++
+CC = g++-7
 CFLAGS = -Wall
 
 default: test
@@ -9,5 +9,5 @@ test: test.o darwin.o
 test.o: test.cpp
 	$(CC) $(CFLAGS) -c test.cpp
 
-darwin.o: dawin.cpp darwin.hpp
+darwin.o: darwin.cpp darwin.hpp
 	$(CC) $(CCFLAGS) -c darwin.cpp darwin.hpp
