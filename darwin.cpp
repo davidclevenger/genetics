@@ -27,7 +27,6 @@ int individual::numGenes()
 //random initialization
 void individual::init()
 {
-    srand(time(NULL));
     for(int i = 0; i < num_genes; i++)
         genes[i] = rand() % 2;
     //test 
@@ -35,28 +34,55 @@ void individual::init()
         printf("gene %d: %d\n", i, genes[i]);  
 }
 
+//test fitness function
+double individual::fitness()
+{
+    double sum = 0;
+    for(int i = 0; i < num_genes; i++)
+        sum += genes[i];
+    return sum;
+}
+
 population::population(int n_genes, int n_pop)
 {
+    srand(time(NULL));
+    printf("creating population...\n");
     num_pop = n_pop;
     num_genes = n_genes;
-    pop = new individual*[n_pop]; 
     init();
 }
 
 population::~population()
 {
-    if(pop)
-        for(int i = 0; i < num_pop; i++)
-            if(pop[i])
-                delete pop[i];
-    if(pop)
-        delete pop;   
+    for(int i = 0; i < num_pop; i++)
+        if(pop[i])
+        {
+            printf("%d not null. deleting...\n", i);
+            delete pop[i];
+        }
 }
 
 void population::init()
 {
+    individual* tmp;
     for(int i = 0; i < num_pop; i++)
     {
-        pop[i] = new individual(num_genes);
+        printf("creating ind %d\n", i);
+        tmp = new individual(num_genes);
+        pop.push_back(tmp);
     }
+}
+
+double population::fitness(int idx)
+{
+    if(idx > -1 && idx < (int)num_pop)
+    {
+        return pop[idx]->fitness();
+    }
+    return -1;
+}
+
+void population::print()
+{
+    printf("%d\n",(int)pop.size());
 }

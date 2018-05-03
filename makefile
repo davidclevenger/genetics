@@ -11,3 +11,6 @@ test.o: test.cpp
 
 darwin.o: darwin.cpp darwin.hpp
 	$(CC) $(CCFLAGS) -c darwin.cpp darwin.hpp
+
+clean:
+	rm -rf *.o *.gch test
