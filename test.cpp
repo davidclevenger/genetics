@@ -2,9 +2,11 @@
 
 using namespace std;
 
+#define POP_SIZE 20
+
 int main()
 {
-    population p(10,5);
-    for(int i = 0; i < 5; i++)
+    population p(10,POP_SIZE);
+    for(int i = 0; i < POP_SIZE; i++)
         printf("%d: %f\n",i, p.fitness(i));
 }

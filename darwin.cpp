@@ -1,67 +1,92 @@
 #include "darwin.hpp"
 
-void individual::set(int idx, int val)
+population::individual::individual(int num_genes)
 {
-    if(idx < num_genes && (val == 1 || val == 0))
-        genes[idx] = val;
-}
-
-individual::individual(int n_genes)
-{
-    num_genes = n_genes;
-    genes = new int[n_genes];
+	genes = NULL;
+    _num_genes = num_genes;
+	genes = new int[_num_genes];
     init();   
 }
 
-individual::~individual()
+population::individual::~individual()
 {
-    if(genes)
-        delete genes;
+    if(genes != NULL)
+        delete[] genes;
 }
 
-int individual::numGenes()
+void population::individual::set(int idx, int val)
 {
-    return num_genes;
+    if(idx < _num_genes && (val == 1 || val == 0))
+        genes[idx] = val;
+}
+
+bool population::individual::operator<(const individual& rhs) const
+{
+    return fitness() < rhs.fitness(); 
 }
 
 //random initialization
-void individual::init()
+void population::individual::init()
 {
-    for(int i = 0; i < num_genes; i++)
+    for(int i = 0; i < _num_genes; i++)
         genes[i] = rand() % 2;
     //test 
-    for(int i = 0; i < num_genes; i++)
+    for(int i = 0; i < _num_genes; i++)
         printf("gene %d: %d\n", i, genes[i]);  
 }
 
 //test fitness function
-double individual::fitness()
+double population::individual::fitness() const
 {
     double sum = 0;
-    for(int i = 0; i < num_genes; i++)
+    for(int i = 0; i < _num_genes; i++)
         sum += genes[i];
     return sum;
 }
 
-population::population(int n_genes, int n_pop)
+void population::individual::mutate()
+{
+    double rnd;
+    for(int i = 0; i < _num_genes; i++)
+    {
+        rnd = rand() / (double) RAND_MAX;
+        if(rnd > 0.9) //TODO make 0.9 a parameter
+        {
+            //flip bit
+            genes[i] == 0 ? genes[i] = 1 : genes[i] = 0;
+        }       
+    }
+}
+
+population::population(int num_genes, int num_pop)
 {
     srand(time(NULL));
     printf("creating population...\n");
-    num_pop = n_pop;
-    num_genes = n_genes;
-    init();
+    _num_pop = num_pop;
+    _num_genes = num_genes;
+	pop = NULL;
+	pop = new individual*[_num_pop];
+    
+	for(int i = 0; i < _num_pop; i++)
+	{
+		pop[i] = NULL;
+		pop[i] = new individual(_num_genes);
+	}
 }
 
 population::~population()
 {
-    for(int i = 0; i < num_pop; i++)
-        if(pop[i])
+    for(int i = 0; i < _num_pop; i++)
+        if(pop[i] != NULL)
         {
             printf("%d not null. deleting...\n", i);
             delete pop[i];
         }
+	if(pop != NULL)
+		delete[] pop;
 }
 
+/*
 void population::init()
 {
     individual* tmp;
@@ -72,10 +97,11 @@ void population::init()
         pop.push_back(tmp);
     }
 }
+*/
 
 double population::fitness(int idx)
 {
-    if(idx > -1 && idx < (int)num_pop)
+    if(idx > -1 && idx < _num_pop)
     {
         return pop[idx]->fitness();
     }
@@ -84,5 +110,5 @@ double population::fitness(int idx)
 
 void population::print()
 {
-    printf("%d\n",(int)pop.size());
+    printf("%d\n", _num_pop);
 }
