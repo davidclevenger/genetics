@@ -58,6 +58,13 @@ void population::individual::mutate()
     }
 }
 
+void population::individual::reset()
+{
+	int i;
+	for(i = 0; i < _num_genes; i++)
+		set(i, 0);
+}
+
 population::population(int num_genes, int num_pop)
 {
     srand(time(NULL));
@@ -86,19 +93,6 @@ population::~population()
 		delete[] pop;
 }
 
-/*
-void population::init()
-{
-    individual* tmp;
-    for(int i = 0; i < num_pop; i++)
-    {
-        printf("creating ind %d\n", i);
-        tmp = new individual(num_genes);
-        pop.push_back(tmp);
-    }
-}
-*/
-
 double population::fitness(int idx)
 {
     if(idx > -1 && idx < _num_pop)
@@ -111,4 +105,14 @@ double population::fitness(int idx)
 void population::print()
 {
     printf("%d\n", _num_pop);
+}
+
+void population::sort_pop()
+{
+	std::sort(pop, pop + _num_pop, individual_ptr_cmp);
+}
+
+bool population::individual_ptr_cmp(individual* lhs, individual* rhs)
+{
+	return !(*lhs < *rhs); //descending order
 }
