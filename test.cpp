@@ -2,7 +2,7 @@
 
 using namespace std;
 
-#define POP_SIZE 100
+#define POP_SIZE 50
 
 int main()
 {

@@ -50,7 +50,7 @@ class population
 		double total_fitness;
 		int _num_pop;
 		int _num_genes;
-		individual** pop;
+		std:vector<individual*> pop;
 };
 #endif
 

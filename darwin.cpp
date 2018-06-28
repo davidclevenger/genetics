@@ -5,6 +5,8 @@ population::individual::individual(int num_genes)
 	genes = NULL;
     _num_genes = num_genes;
 	genes = new int[_num_genes];
+	raw_fitness = 0.0;
+	rel_fitness = 0.0;
     init();   
 }
 
