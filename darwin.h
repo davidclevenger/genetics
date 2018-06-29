@@ -23,11 +23,14 @@ typedef struct
 	int num_pop;
 	int num_genes;
 	int mem_needed;
+	char pad[4];
 
 } Population;
 
 void init(Population*, int, int); // p, _num_pop, _num_genes
 void deinit(Population*); // p
+
+void generate(Population*); // p
 
 #endif
 
