@@ -5,20 +5,13 @@
 #include <stdio.h>
 #include <string.h>
 
+#include "individual.h"
+
 typedef struct
 {
-	/*
-	*	Individual level members
-	*/
 
-	unsigned char* genes;
-	double* raw_fitness;
-	double* rel_fitness;
+	Individual** pop;
 	
-	/*
-	*	Population level members
-	*/
-
 	double total_fitness;
 	int num_pop;
 	int num_genes;
@@ -27,8 +20,12 @@ typedef struct
 
 } Population;
 
+/*	Population memory utility */
+
 void init(Population*, int, int); // p, _num_pop, _num_genes
 void deinit(Population*); // p
+
+/*	Population functional */
 
 void generate(Population*); // p
 
