@@ -2,6 +2,10 @@
 
 void individual_init(Individual* ind, int _num_genes)
 {
+	if(ind == NULL)
+	{
+		return;
+	}
 	if(_num_genes <= 0)
 	{
 		fprintf(stderr, "Invalid Paramater Error: (individual_init)\n");

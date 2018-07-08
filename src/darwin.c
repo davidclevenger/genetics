@@ -27,13 +27,19 @@ void init(Population* p, int _num_pop, int _num_genes)
 	p->pop = (Individual**)malloc((p->num_pop) * sizeof(Individual*));
 	if(p->pop == NULL)
 	{
-		printf("Malloc failure.\n");
+		fprintf(stderr, "Malloc failure: (init)\n");
 		return;
 	}
 
 	for(i = 0; i < p->num_pop; i++)
 	{
 		p->pop[i] = NULL;
+		p->pop[i] = (Individual*)malloc(sizeof(Individual));
+		if(p->pop[i] == NULL)
+		{
+			fprintf(stderr, "Malloc error: (init)\n");
+			return;
+		}
 	}
 
 	generate(p);
