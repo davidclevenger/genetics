@@ -53,6 +53,7 @@ void deinit(Population* p)
 		if(p->pop[i] != NULL)
 		{
 			individual_deinit(p->pop[i]);
+			free(p->pop[i]);
 		}
 	}
 
