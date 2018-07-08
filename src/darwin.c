@@ -2,6 +2,8 @@
 
 void init(Population* p, int _num_pop, int _num_genes)
 {
+	int i;
+
 	if(_num_pop <= 0 || _num_genes <= 0)
 	{
 		printf("Error: (init) - invalid parameters\n");
@@ -9,24 +11,9 @@ void init(Population* p, int _num_pop, int _num_genes)
 	}
 
 	p->pop				= NULL;
-	p->raw_fitness 		= NULL;
-	p->rel_fitness 		= NULL;
 	p->total_fitness 	= 0.0;
 	p->num_pop 			= _num_pop;
 	p->num_genes 		= _num_genes;
-
-	//total_genes = (p->num_pop) * (p->num_genes);
-	
-	/*
-	if(total_genes % 8 == 0)
-	{
-		p->mem_needed = total_genes >> 3; //divide by 8
-	}
-	else
-	{
-		p->mem_needed = (total_genes + 8) >> 3; //divide by 8, round up
-	}
-	*/
 
 	if(p->num_genes % 8 == 0) //well aligned
 	{
@@ -37,43 +24,44 @@ void init(Population* p, int _num_pop, int _num_genes)
 		p->mem_needed = (( p->num_genes + 8 ) >> 3) * p->num_pop;
 	}
 
-	printf("%d\n", p->mem_needed);
-
-	p->genes = (unsigned char*)malloc((p->mem_needed) * sizeof(unsigned char));
-	if(p->genes == NULL)
+	p->pop = (Individual**)malloc((p->num_pop) * sizeof(Individual*));
+	if(p->pop == NULL)
 	{
 		printf("Malloc failure.\n");
 		return;
 	}
 
-	p->raw_fitness = (double*)malloc((p->num_pop) * sizeof(double));
-	if(p->raw_fitness == NULL)
+	for(i = 0; i < p->num_pop; i++)
 	{
-		printf("Malloc failure.\n");
-		return;
+		p->pop[i] = NULL;
 	}
 
-	p->rel_fitness = (double*)malloc((p->num_pop) * sizeof(double));
-	if(p->rel_fitness == NULL)
-	{
-		printf("Malloc failure.\n");
-		return;
-	}
-
-	memset(p->genes, 0, p->mem_needed * sizeof(unsigned char)); //zero out entire block
-	memset(p->raw_fitness, 0, p->num_pop * sizeof(double));
-	memset(p->rel_fitness, 0, p->num_pop * sizeof(double));
+	generate(p);
 }
 
 void deinit(Population* p)
 {
-	if(p->genes != NULL)
-		free(p->genes);
+	int i;
+	for(i = 0; i < p->num_pop; i++)
+	{
+		if(p->pop[i] != NULL)
+		{
+			individual_deinit(p->pop[i]);
+		}
+	}
 
-	if(p->raw_fitness != NULL)
-		free(p->raw_fitness);
+	if(p->pop != NULL)
+	{
+		free(p->pop);
+	}
+}
 
-	if(p->rel_fitness != NULL)
-		free(p->rel_fitness);
+void generate(Population* p)
+{
+	int i;
+	for(i = 0; i < p->num_pop; i++)
+	{
+		individual_init(p->pop[i], p->num_genes);
+	}
 }
 

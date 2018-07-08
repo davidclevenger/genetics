@@ -34,7 +34,7 @@ void individual_init(Individual* ind, int _num_genes)
 		return;
 	}
 
-	memset(ind->genes, 0, ind->block_size) // zero out block
+	memset(ind->genes, 0, ind->block_size); // zero out block
 }
 
 void individual_deinit(Individual* ind)

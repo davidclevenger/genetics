@@ -3,19 +3,20 @@
 
 #include<stdio.h>
 #include<stdlib.h>
+#include<string.h>
 
 typedef struct
 {
-	unsigned char* genes
+	unsigned char* genes;
 	double raw_fitness;
 	double rel_fitness;
 	int num_genes;
 	int block_size;
 
-} Individual
+} Individual;
 
-void individual_init(Individual*, int) // ind, _num_genes
-void individual_deinit(Individual*) // ind
+void individual_init(Individual*, int); // ind, _num_genes
+void individual_deinit(Individual*); // ind
 
 #endif
 
