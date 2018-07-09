@@ -4,6 +4,8 @@ void init(Population* p, int _num_pop, int _num_genes)
 {
 	int i;
 
+	srand(time(NULL));
+
 	if(_num_pop <= 0 || _num_genes <= 0)
 	{
 		printf("Error: (init) - invalid parameters\n");

@@ -15,8 +15,24 @@ typedef struct
 
 } Individual;
 
+/*
+	Individual memory utility
+*/
+
 void individual_init(Individual*, int); // ind, _num_genes
 void individual_deinit(Individual*); // ind
+
+/*
+	Individual functional
+*/
+
+void setup(Individual*); // ind
+
+/*
+	Individual misc
+*/
+
+void print(Individual*); // genes, num_genes, block_size
 
 #endif
 

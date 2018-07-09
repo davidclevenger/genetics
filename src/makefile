@@ -1,11 +1,12 @@
 CC = gcc -std=c99
-CFLAGS = -Wall -g
+CFLAGS = -Wall -Wpedantic -g
 
 default: test
 
 # C build
 test: individual.o darwin.o test.o
 	$(CC) $(CFLAGS) individual.o darwin.o test.o -o test
+	@echo "Done!"
 
 individual.o: individual.h individual.c
 	$(CC) $(CFLAGS) -c individual.h individual.c
@@ -17,4 +18,4 @@ test.o: test.c
 	$(CC) $(CFLAGS) -c test.c
 
 clean:
-	rm -rf *.o *.gch c_test
+	rm -rf *.o *.gch test
