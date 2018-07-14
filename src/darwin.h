@@ -29,6 +29,7 @@ void deinit(Population*); // p
 /*	Population functional */
 
 void generate(Population*); // p
+void sortPop(Population*); // p
 
 #endif
 

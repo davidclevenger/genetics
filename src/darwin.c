@@ -74,3 +74,7 @@ void generate(Population* p)
 	}
 }
 
+void sortPop(Population* p)
+{
+	
+}

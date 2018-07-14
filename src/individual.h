@@ -21,12 +21,17 @@ typedef struct
 
 void individual_init(Individual*, int); // ind, _num_genes
 void individual_deinit(Individual*); // ind
+void set_gene(Individual*, int); // ind, idx
+void clear_gene(Individual*, int); // ind, idx
+int get_gene(Individual*, int); // ind, idx
 
 /*
 	Individual functional
 */
 
 void setup(Individual*); // ind
+double fitness(Individual*); // ind
+int cmp(Individual*, Individual*); // lhs, rhs
 
 /*
 	Individual misc
