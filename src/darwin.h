@@ -31,5 +31,9 @@ void deinit(Population*); // p
 void generate(Population*); // p
 void sortPop(Population*); // p
 
+/*	General utility */
+
+void bsort(Population*); // base, num, size 
+
 #endif
 

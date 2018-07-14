@@ -31,7 +31,7 @@ int get_gene(Individual*, int); // ind, idx
 
 void setup(Individual*); // ind
 double fitness(Individual*); // ind
-int cmp(Individual*, Individual*); // lhs, rhs
+int cmp(const void*, const void*); // lhs, rhs
 
 /*
 	Individual misc

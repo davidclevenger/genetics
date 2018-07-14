@@ -64,8 +64,6 @@ void setup(Individual* ind)
 		proc_idx = raw_idx % 8;
 		block_idx = raw_idx / 8;
 
-		printf("input: %d, proc: %d, block: %d\n", raw_idx, proc_idx, block_idx);
-
 		ind->genes[block_idx] |= ( (rand() % 2) << (7 - proc_idx) ); // TODO: will need to revisit this
 	}
 }
@@ -82,7 +80,7 @@ void set_gene(Individual* ind, int raw_idx)
 	proc_idx = raw_idx % 8;
 	block_idx = raw_idx / 8;
 
-	if((block_idx >= ind->block_size) || (raw_idx >= ind->num_genes) || (raw_idx <= 0))
+	if((block_idx >= ind->block_size) || (raw_idx >= ind->num_genes) || (raw_idx < 0))
 	{
 		fprintf(stderr, "Parameter Error: (set_gene)\n");
 		return;
@@ -96,13 +94,13 @@ void clear_gene(Individual* ind, int raw_idx)
 	int proc_idx, block_idx;
 	if(ind == NULL)
 	{
-		fprintf(stderr, "Error: (set_gene)\n");
+		fprintf(stderr, "Error: (clear_gene)\n");
 		return;
 	}
 	proc_idx = raw_idx % 8;
 	block_idx = raw_idx / 8;
 
-	if((block_idx >= ind->block_size) || (raw_idx >= ind->num_genes) || (raw_idx <= 0))
+	if((block_idx >= ind->block_size) || (raw_idx >= ind->num_genes) || (raw_idx < 0))
 	{
 		fprintf(stderr, "Parameter Error: (clear_gene)\n");
 		return;
@@ -116,20 +114,20 @@ int get_gene(Individual* ind, int raw_idx)
 	int proc_idx, block_idx;
 	if(ind == NULL)
 	{
-		fprintf(stderr, "Error: (set_gene)\n");
+		fprintf(stderr, "Error: (get_gene)\n");
 		return -1;
 	}
 
 	proc_idx = raw_idx % 8;
 	block_idx = raw_idx / 8;
 
-	if((block_idx >= ind->block_size) || (raw_idx >= ind->num_genes) || (raw_idx <= 0))
+	if((block_idx >= ind->block_size) || (raw_idx >= ind->num_genes) || (raw_idx < 0))
 	{
-		fprintf(stderr, "Parameter Error: (get_gene)\n");
+		fprintf(stderr, "Parameter Error: (get_gene) passed %d\n", raw_idx);
 		return -1;
 	}
 
-	if( ind->genes[block_idx] & (1 << proc_idx) )
+	if( (ind->genes[block_idx]) & (1 << (7 - proc_idx)) )
 	{
 		return 1;
 	}
@@ -153,18 +151,20 @@ double fitness(Individual* ind)
 	return out;
 }
 
-int cmp(Individual* lhs, Individual* rhs)
+int cmp(const void* lhs, const void* rhs)
 {
 	double lhs_fit, rhs_fit;
+	Individual* left = (Individual*)lhs;
+	Individual* right = (Individual*)rhs;
 
-	if((lhs == NULL) || (rhs == NULL))
+	if((left == NULL) || (right == NULL))
 	{
 		fprintf(stderr, "Error: (cmp)\n");
 		return 2; // TODO need to figure what to do with this.
 	}
 
-	lhs_fit = fitness(lhs);
-	rhs_fit = fitness(rhs);
+	lhs_fit = fitness(left);
+	rhs_fit = fitness(right);
 
 	if(lhs_fit < rhs_fit )
 	{

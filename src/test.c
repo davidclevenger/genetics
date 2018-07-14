@@ -5,18 +5,23 @@
 
 int main()
 {
-	int i; 
+	int i;
 	Population p;
 	init(&p, POP_SIZE, NUM_GENES);
-	setup(p.pop[0]);
 	for(i = 0; i < POP_SIZE; i++)
 	{
-		if( get_gene(p.pop[4], i) == 0 )
-		{
-			printf("%d is 0!\n", i);
-		}
+		setup(p.pop[i]);
+		print(p.pop[i]);
+		printf("%f\n", fitness(p.pop[i]));
+	}
+	
+	sortPop(&p);
+
+	for(i = 0; i < POP_SIZE; i++)
+	{
+		printf("%f\n", fitness(p.pop[i]));
 	}
 
-	print(p.pop[0]);
+
 	deinit(&p);
 }
