@@ -96,12 +96,34 @@ void sortPop(Population* p)
 	bsort(p);
 }
 
-void kill(Population* p, int start)
+int kill(Population* p, double survival_rate)
 {
-	int i;
+	int start, i;
+	start = (int)((p->num_pop * survival_rate) + ROUND);
+
 	for(i = start; i < p->num_pop; i++)
 	{
 		reset(p->pop[i]);
+	}
+
+	return start;
+}
+
+void evolve(Population* p)
+{
+	int next_gen_start;
+	if(p == NULL)
+	{
+		fprintf(stderr, "Error: (evolve)\n");
+		return;
+	}
+
+	while(1)
+	{
+		evaluate(p);
+		sortPop(p);
+		next_gen_start = kill(p, SURVIVE_RATE);
+		//TODO: CONTINUE HERE
 	}
 }
 

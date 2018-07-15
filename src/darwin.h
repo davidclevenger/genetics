@@ -8,6 +8,9 @@
 
 #include "individual.h"
 
+#define SURVIVE_RATE 0.5
+#define ROUND 1e-9
+
 typedef struct
 {
 
@@ -31,7 +34,9 @@ void deinit(Population*); // p
 void generate(Population*); // p
 void evaluate(Population*); // p
 void sortPop(Population*); // p
-void kill(Population*, int); // p, start
+int kill(Population*, double); // p, survival_rate
+
+void evolve(Population*) // p
 
 /*	General utility */
 
