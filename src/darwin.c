@@ -86,18 +86,18 @@ void bsort(Population* p)
 {
 	int i, sorted;
 	Individual tmp;
-	sorted = TRUE;
+	sorted = FALSE;
 
 	while(!sorted)
 	{
 	sorted = TRUE;
 		for(i = 0; i < p->num_pop-1; i++)
 		{
-			if(cmp(p->pop[i], p->pop[i+1]) == -1)
+			if(cmp(p->pop[i], p->pop[i+1]) == -1) // sort in descending order
 			{
-				tmp = *(p->pop[i]);
-				*(p->pop[i+1]) = *(p->pop[i]);
-				*(p->pop[i+1]) = tmp;
+				memcpy(&tmp, p->pop[i], sizeof(Individual));
+				memcpy(p->pop[i], p->pop[i+1], sizeof(Individual));
+				memcpy(p->pop[i+1], &tmp, sizeof(Individual));
 				sorted = FALSE;
 			}
 		}
