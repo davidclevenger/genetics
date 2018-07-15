@@ -76,7 +76,7 @@ void generate(Population* p)
 
 void sortPop(Population* p)
 {
-	qsort(p->pop, p->num_pop, sizeof(Individual), cmp);
+	bsort(p);
 }
 
 #define TRUE 1
@@ -85,7 +85,7 @@ void sortPop(Population* p)
 void bsort(Population* p)
 {
 	int i, sorted;
-	Individual* tmp;
+	Individual tmp;
 	sorted = TRUE;
 
 	while(!sorted)
@@ -95,9 +95,9 @@ void bsort(Population* p)
 		{
 			if(cmp(p->pop[i], p->pop[i+1]) == -1)
 			{
-				tmp = p->pop[i];
-				p->pop[i+1] = p->pop[i];
-				p->pop[i+1] = tmp;
+				tmp = *(p->pop[i]);
+				*(p->pop[i+1]) = *(p->pop[i]);
+				*(p->pop[i+1]) = tmp;
 				sorted = FALSE;
 			}
 		}
