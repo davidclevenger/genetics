@@ -15,6 +15,7 @@ int main()
 		printf("%f\n", fitness(p.pop[i]));
 	}
 	
+	evaluate(&p);
 	sortPop(&p);
 
 	for(i = 0; i < POP_SIZE; i++)

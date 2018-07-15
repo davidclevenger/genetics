@@ -74,9 +74,35 @@ void generate(Population* p)
 	}
 }
 
+void evaluate(Population* p)
+{
+	int i;
+	double tmp, sum = 0;
+	for(i = 0; i < p->num_pop; i++)
+	{
+		tmp = fitness(p->pop[i]);
+		set_raw_fitness(p->pop[i], tmp);
+		sum += tmp;
+	}
+
+	for(i = 0; i < p->num_pop; i++)
+	{
+		set_rel_fitness(p->pop[i], sum);
+	}
+}
+
 void sortPop(Population* p)
 {
 	bsort(p);
+}
+
+void kill(Population* p, int start)
+{
+	int i;
+	for(i = start; i < p->num_pop; i++)
+	{
+		reset(p->pop[i]);
+	}
 }
 
 #define TRUE 1

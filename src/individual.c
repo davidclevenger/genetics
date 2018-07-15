@@ -123,7 +123,7 @@ int get_gene(Individual* ind, int raw_idx)
 
 	if((block_idx >= ind->block_size) || (raw_idx >= ind->num_genes) || (raw_idx < 0))
 	{
-		fprintf(stderr, "Parameter Error: (get_gene) passed %d\n", raw_idx);
+		fprintf(stderr, "Parameter Error: (get_gene)\n");
 		return -1;
 	}
 
@@ -151,32 +151,40 @@ double fitness(Individual* ind)
 	return out;
 }
 
-int cmp(const void* lhs, const void* rhs)
+void set_raw_fitness(Individual* ind, double fit)
 {
-	double lhs_fit, rhs_fit;
-	Individual* left = (Individual*)lhs;
-	Individual* right = (Individual*)rhs;
-
-	if((left == NULL) || (right == NULL))
+	if(ind == NULL)
 	{
-		fprintf(stderr, "Error: (cmp)\n");
-		return 2; // TODO need to figure what to do with this.
+		fprintf(stderr, "Error: (set_raw_fitness)\n");
+		return;
 	}
 
-	lhs_fit = fitness(left);
-	rhs_fit = fitness(right);
+	ind->raw_fitness = fit;
+}
 
-	if(lhs_fit < rhs_fit )
+void set_rel_fitness(Individual* ind, double sum)
+{
+	if(ind == NULL)
 	{
-		return -1;
+		fprintf(stderr, "Error: (set_rel_fitness)\n");
+		return;
 	}
-	else if(lhs_fit > rhs_fit)
+
+	ind->rel_fitness = ( ind->raw_fitness / sum );
+}
+
+void reset(Individual* ind)
+{
+	int i;
+	if(ind == NULL)
 	{
-		return 1;
+		fprintf(stderr, "Error: (reset)\n");
+		return;
 	}
-	else
+
+	for(i = 0; i < ind->num_genes; i++)
 	{
-		return 0;
+		clear_gene(ind, i);
 	}
 }
 
@@ -209,3 +217,31 @@ void print(Individual* ind)
 	printf("\n");
 }
 
+int cmp(const void* lhs, const void* rhs)
+{
+	double lhs_fit, rhs_fit;
+	Individual* left = (Individual*)lhs;
+	Individual* right = (Individual*)rhs;
+
+	if((left == NULL) || (right == NULL))
+	{
+		fprintf(stderr, "Error: (cmp)\n");
+		return 2; // TODO need to figure what to do with this.
+	}
+
+	lhs_fit = left->rel_fitness;
+	rhs_fit = right->rel_fitness;
+
+	if(lhs_fit < rhs_fit )
+	{
+		return -1;
+	}
+	else if(lhs_fit > rhs_fit)
+	{
+		return 1;
+	}
+	else
+	{
+		return 0;
+	}
+}

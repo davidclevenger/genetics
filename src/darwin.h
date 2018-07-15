@@ -29,11 +29,13 @@ void deinit(Population*); // p
 /*	Population functional */
 
 void generate(Population*); // p
+void evaluate(Population*); // p
 void sortPop(Population*); // p
+void kill(Population*, int); // p, start
 
 /*	General utility */
 
-void bsort(Population*); // base, num, size 
+void bsort(Population*); // p 
 
 #endif
 

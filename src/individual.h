@@ -31,13 +31,16 @@ int get_gene(Individual*, int); // ind, idx
 
 void setup(Individual*); // ind
 double fitness(Individual*); // ind
-int cmp(const void*, const void*); // lhs, rhs
+void set_raw_fitness(Individual*, double); // ind, fit
+void set_rel_fitness(Individual*, double); // ind, sum
+void reset(Individual*); // ind 
 
 /*
 	Individual misc
 */
 
 void print(Individual*); // genes, num_genes, block_size
+int cmp(const void*, const void*); // lhs, rhs
 
 #endif
 
