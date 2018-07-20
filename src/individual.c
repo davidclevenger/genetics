@@ -50,24 +50,6 @@ void individual_deinit(Individual* ind)
 	}
 }
 
-void setup(Individual* ind)
-{
-	int raw_idx, proc_idx, block_idx;
-	if(ind == NULL)
-	{
-		fprintf(stderr, "Error: (setup)\n");
-		return;
-	}
-
-	for(raw_idx = 0; raw_idx < ind->num_genes; raw_idx++)
-	{
-		proc_idx = raw_idx % 8;
-		block_idx = raw_idx / 8;
-
-		ind->genes[block_idx] |= ( (rand() % 2) << (7 - proc_idx) ); // TODO: will need to revisit this
-	}
-}
-
 void set_gene(Individual* ind, int raw_idx)
 {
 	int proc_idx, block_idx;
@@ -137,6 +119,24 @@ int get_gene(Individual* ind, int raw_idx)
 	}
 }
 
+void setup(Individual* ind)
+{
+	int raw_idx, proc_idx, block_idx;
+	if(ind == NULL)
+	{
+		fprintf(stderr, "Error: (setup)\n");
+		return;
+	}
+
+	for(raw_idx = 0; raw_idx < ind->num_genes; raw_idx++)
+	{
+		proc_idx = raw_idx % 8;
+		block_idx = raw_idx / 8;
+
+		ind->genes[block_idx] |= ( (rand() % 2) << (7 - proc_idx) ); // TODO: will need to revisit this
+	}
+}
+
 
 // arbitrary fitness function to test functionality(obj: maximize sum of genes)
 double fitness(Individual* ind)
@@ -185,6 +185,34 @@ void reset(Individual* ind)
 	for(i = 0; i < ind->num_genes; i++)
 	{
 		clear_gene(ind, i);
+	}
+}
+
+// TODO: Add mode paramater
+void crossover(Individual* p1, Individual* p2, Individual* child)
+{
+	int i;
+	for(int i = 0; i < (p1->num_genes / 2); i++)
+	{
+		if(get_gene(p1, i))
+		{
+			set_gene(child, i);
+		}
+		else
+		{
+			clear_gene(child, i);
+		}
+	}
+	for(i = (p1->num_genes / 2); i < p1->num_genes; i++)
+	{
+		if(get_gene(p2, i))
+		{
+			set_gene(child, i);
+		}
+		else
+		{
+			clear_gene(child, i);
+		}
 	}
 }
 

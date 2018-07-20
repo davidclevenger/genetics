@@ -34,6 +34,7 @@ double fitness(Individual*); // ind
 void set_raw_fitness(Individual*, double); // ind, fit
 void set_rel_fitness(Individual*, double); // ind, sum
 void reset(Individual*); // ind 
+void crossover(Individual*, Individual*, Individual*) // p1, p2, child
 
 /*
 	Individual misc

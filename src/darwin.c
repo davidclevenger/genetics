@@ -109,8 +109,26 @@ int kill(Population* p, double survival_rate)
 	return start;
 }
 
+void regenerate(Population* p, int start)
+{	
+	int child_idx;
+	int p1, p2;
+	const int pop_range = p->num_pop - start + 1;
+	for(child_idx = start; child_idx < p->num_pop; child_idx++)
+	{
+		p1 = (rand() % (pop_range)) + start;
+		do
+		{
+			p2 = (rand() % (pop_range)) + start;
+		} while (p1 == p2);
+
+		crossover(p->pop[p1], p->pop[p2], p->pop[child_idx]);
+	}
+}
+
 void evolve(Population* p)
 {
+	int run = MAX_ITER;
 	int next_gen_start;
 	if(p == NULL)
 	{
@@ -118,7 +136,7 @@ void evolve(Population* p)
 		return;
 	}
 
-	while(1)
+	while(run--)
 	{
 		evaluate(p);
 		sortPop(p);
