@@ -216,6 +216,25 @@ void crossover(Individual* p1, Individual* p2, Individual* child)
 	}
 }
 
+void mutate(Individual* ind, double mutation_rate)
+{
+	int i;
+	for(i = 0; i < ind->num_genes; i++)
+	{
+		if( RAND_LOW_PRECISION() <= mutation_rate)
+		{
+			if(get_gene(ind, i))
+			{
+				clear_gene(ind, i);
+			}
+			else
+			{
+				set_gene(ind, i);
+			}
+		}
+	}
+}
+
 void print(Individual* ind)
 {
 	int raw_idx, proc_idx, block_idx;

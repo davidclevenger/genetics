@@ -123,6 +123,7 @@ void regenerate(Population* p, int start)
 		} while (p1 == p2);
 
 		crossover(p->pop[p1], p->pop[p2], p->pop[child_idx]);
+		mutate(p->pop[child_idx], MUTATION_RATE);
 	}
 }
 
@@ -141,7 +142,7 @@ void evolve(Population* p)
 		evaluate(p);
 		sortPop(p);
 		next_gen_start = kill(p, SURVIVE_RATE);
-		//TODO: CONTINUE HERE
+		regenerate(p, next_gen_start);
 	}
 }
 
