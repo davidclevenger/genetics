@@ -113,14 +113,17 @@ void regenerate(Population* p, int start)
 {	
 	int child_idx;
 	int p1, p2;
-	const int pop_range = p->num_pop - start + 1;
 	for(child_idx = start; child_idx < p->num_pop; child_idx++)
 	{
-		p1 = (rand() % (pop_range)) + start;
+		p1 = (rand() % start);
 		do
 		{
-			p2 = (rand() % (pop_range)) + start;
+			p2 = (rand() % start);
 		} while (p1 == p2);
+		
+		assert(p1 != p2);
+		assert(p1 < start);
+		assert(p2 < start);
 
 		crossover(p->pop[p1], p->pop[p2], p->pop[child_idx]);
 		mutate(p->pop[child_idx], MUTATION_RATE);
