@@ -2,4 +2,9 @@ language: C
 
 compiler: gcc
 
+# whitelist
+branches:
+	only:
+		- development
+
 script: make
