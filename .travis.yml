@@ -4,8 +4,8 @@ compiler: gcc
 
 # whitelist
 branches:
-	only:
-		- master
-		- development
+  only:
+  - master
+  - development
 
 script: make
