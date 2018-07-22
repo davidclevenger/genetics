@@ -5,6 +5,7 @@ compiler: gcc
 # whitelist
 branches:
 	only:
+		- master
 		- development
 
 script: make
