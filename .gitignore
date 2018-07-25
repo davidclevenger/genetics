@@ -1,4 +1,11 @@
-*.o
-*.gch
-test
-c_test
+# compiled files
+src/*.o
+src/*.gch
+
+# exectutables
+src/test
+
+# coverage files
+src/*.gcda
+src/*.gcno
+src/*.gcov
