@@ -3,7 +3,7 @@ src/*.o
 src/*.gch
 
 # exectutables
-src/test
+tests/test
 
 # coverage files
 src/*.gcda
