@@ -1,16 +1,22 @@
 CC = gcc -std=c99
-CFLAGS = -Wall -Wpedantic -g
+CFLAGS = -Wall -Wpedantic -Wextra -g
 
 SRC = ../src
+SRCS = $(SRC)/darwin.o $(SRC)/individual.o
 
-default: tests
+TESTS = $(wildcard *.c)
+OBJS = $(patsubst %.c, %.o, $(TESTS)) 
+PROGS = $(patsubst %.c, %, $(TESTS))
 
-tests: $(SRC)/darwin.o $(SRC)/individual.o test.o
-	$(CC) $(CFLAGS) $(SRC)/darwin.o $(SRC)/individual.o test.o -o test
-	@echo "Built tests."
 
-test.o: test.c
-	$(CC) $(CFLAGS) -I $(SRC) -c test.c
+all: $(PROGS)
 
+$(PROGS): %: %.o $(SRCS)
+	$(CC) $(CFLAGS) $< $(SRCS) -o $@
+
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -I $(SRC)
+
+.PHONY:
 clean:
-	rm -rf *.o test
+	rm -rf $(OBJS) $(PROGS)
