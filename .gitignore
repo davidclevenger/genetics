@@ -1,9 +1,10 @@
 # compiled files
 src/*.o
 src/*.gch
+tests/*.o
 
 # exectutables
-tests/test
+tests/*_test
 
 # coverage files
 src/*.gcda
