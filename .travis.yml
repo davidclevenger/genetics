@@ -8,4 +8,6 @@ branches:
   - master
   - development
 
-script: make
+script: 
+	make
+	python ./tests/run_all.py

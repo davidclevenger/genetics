@@ -147,6 +147,12 @@ void evolve(Population* p)
 		next_gen_start = kill(p, SURVIVE_RATE);
 		regenerate(p, next_gen_start);
 	}
+	
+	/*
+	*	Return the population buffer to a sorted state.
+	*/
+	evaluate(p);
+	sortPop(p);
 }
 
 #define TRUE 1
