@@ -12,6 +12,7 @@ def run_all():
 	for f in files:
 		if f.endswith('.o'): # assume executable exists if object file exists
 			exe_str = "./{}".format(f[:-2])
+			print('Running test: {}'.format(exe_str))
 			proc = subprocess.Popen(exe_str, shell=False)
 			proc.wait()
 

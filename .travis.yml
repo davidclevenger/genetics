@@ -9,4 +9,6 @@ branches:
   - development
 
 script: 
-	make && python ./tests/run_all.py
+- make
+- cd ./tests
+- python run_all.py
