@@ -7,7 +7,7 @@ def run_all():
 	Run all tests. Find all files with '.o' extension.
 	Run the corresponding executable.
 	"""
-	files = os.listdir()
+	files = os.listdir(os.getcwd())
 	
 	for f in files:
 		if f.endswith('.o'): # assume executable exists if object file exists
