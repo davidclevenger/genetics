@@ -27,4 +27,6 @@ int main()
 	}
 
 	deinit(&p);
+	
+	return 0;
 }

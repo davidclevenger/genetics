@@ -14,11 +14,7 @@ int main()
 	}
 	
 	evolve(&p);
-
-	for(i = 0; i < POP_SIZE; i++)
-	{
-		printf("%f\n", fitness(p.pop[i]));
-	}
-
 	deinit(&p);
+
+	return 0;
 }

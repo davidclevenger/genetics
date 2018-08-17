@@ -15,6 +15,10 @@ def run_all():
 			print('Running test: {}'.format(exe_str))
 			proc = subprocess.Popen(exe_str, shell=False)
 			proc.wait()
+			if proc.returncode == 0:
+				print('{}: PASSED'.format(exe_str))
+			else:
+				print('{}: FAILED'.format(exe_str))
 
 if __name__ == '__main__':
 	sys.exit(run_all())
