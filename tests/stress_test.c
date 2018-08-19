@@ -3,6 +3,12 @@
 #define POP_SIZE 10000
 #define NUM_GENES 100
 
+// function stub (unused, but required)
+double fitness(Individual* ind)
+{
+	return get_gene(ind, 0); // silence unused parameter warning
+}
+
 int main()
 {
 	int i;
