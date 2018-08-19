@@ -28,7 +28,7 @@ int get_gene(Individual*, int); // ind, idx
 /*	Individual functional */
 
 void setup(Individual*); // ind
-double fitness(Individual*); // ind
+extern double fitness(Individual*); // ind
 void set_raw_fitness(Individual*, double); // ind, fit
 void set_rel_fitness(Individual*, double); // ind, sum
 void reset(Individual*); // ind 

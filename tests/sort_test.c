@@ -4,6 +4,18 @@
 #define POP_SIZE 1000
 #define NUM_GENES 50
 
+double fitness(Individual* ind)
+{
+  double fit = 0;
+  int i;
+  for(i = 0; i < ind->num_genes; i++)
+  {
+    fit += get_gene(ind, i); 
+  }
+  
+  return fit;
+}
+
 int main()
 {
 	int i;

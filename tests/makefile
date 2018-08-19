@@ -20,3 +20,4 @@ $(PROGS): %: %.o $(SRCS)
 .PHONY:
 clean:
 	rm -rf $(OBJS) $(PROGS)
+	rm -rf *.o 

@@ -1,3 +1,4 @@
+#include <assert.h>
 #include "darwin.h"
 
 #define POP_SIZE 1000
@@ -9,7 +10,7 @@ double fitness(Individual* ind)
   int i;
   for(i = 0; i < ind->num_genes; i++)
   {
-    fit += get_gene(ind, i); 
+    fit += get_gene(ind, i);
   }
   
   return fit;
@@ -26,7 +27,18 @@ int main()
 	}
 	
 	evolve(&p);
-	deinit(&p);
+//	sortPop(&p);
 
+	for(i = 1; i < POP_SIZE; i++)
+	{
+		if( fitness(p.pop[i-1]) < fitness(p.pop[i]) )
+		{
+			fprintf(stderr, "Sorting failure.\n");
+			assert(0);
+		}
+	}
+
+	deinit(&p);
+	
 	return 0;
 }

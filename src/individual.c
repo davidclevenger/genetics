@@ -137,20 +137,6 @@ void setup(Individual* ind)
 	}
 }
 
-
-// arbitrary fitness function to test functionality(obj: maximize sum of genes)
-double fitness(Individual* ind)
-{
-	double out = 0;
-	int i;
-	for(i = 0; i < ind->num_genes; i++)
-	{
-		out += get_gene(ind, i);
-	}
-
-	return out;
-}
-
 void set_raw_fitness(Individual* ind, double fit)
 {
 	if(ind == NULL)
