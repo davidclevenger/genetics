@@ -2,9 +2,11 @@
 src/*.o
 src/*.gch
 tests/*.o
+examples/*.o
 
 # exectutables
 tests/*_test
+examples/*_example
 
 # coverage files
 src/*.gcda
