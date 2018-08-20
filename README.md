@@ -1,5 +1,4 @@
-# Genetics - General Purpose Genetic Algorithms
-[![Build Status](https://travis-ci.org/davidclevenger/genetics.svg?branch=master)](https://travis-ci.org/davidclevenger/genetics)
+# Genetics - General Purpose Genetic Algorithms [![Build Status](https://travis-ci.org/davidclevenger/genetics.svg?branch=master)](https://travis-ci.org/davidclevenger/genetics)
 
 ## Functionality
 The alogorithm works by instantiating an initial set of randomly generated **Individuals**. These Individuals collectively
