@@ -10,7 +10,6 @@ individual.o: individual.h individual.c
 
 darwin.o: darwin.h darwin.c
 	$(CC) $(CFLAGS) -c darwin.h darwin.c
-	@echo "Built src."
 
 clean:
 	rm -rf *.o *.gch

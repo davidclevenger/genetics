@@ -20,7 +20,7 @@ double fitness(Individual* individual)
   int i;
   for(i = 0; i < individual->num_genes; i++)
   {
-    fit += get_gene(ind, i);
+    fit += get_gene(individual, i);
   }
   
   return fit;
