@@ -30,7 +30,7 @@
 double fitness(Individual* ind)
 {
 	int slope, y_int, i;
-  	double fit = 0, sse = 0;
+  	double fit = 0, soe = 0;
 
 	//slopes
   	if(get_gene(ind, 0))
@@ -62,10 +62,10 @@ double fitness(Individual* ind)
 
 	for(i = 0; i < 7; i++)
 	{
-		sse += pow( ((inputs[i] * slope + y_int) - ideal[i]), 2);
+		soe += (inputs[i] * slope + y_int) - ideal[i];
 	}
 
-	fit = 1 / sse;
+	fit = 1 / soe;
 
   return fit;
 }
