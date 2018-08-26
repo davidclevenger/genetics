@@ -1,12 +1,13 @@
 #include "darwin.h"
 
-void init(Population* p, int _num_pop, int _num_genes)
+void init(Population* p, int _num_pop, int _num_genes, int _fitness_type)
 {
 	int i;
 
 	srand(time(NULL));
 
-	if(_num_pop <= 0 || _num_genes <= 0)
+	if(_num_pop <= 0 || _num_genes <= 0 ||
+	(_fitness_type != FIT_MIN && _fitness_type != FIT_MAX) )
 	{
 		printf("Error: (init) - invalid parameters\n");
 		return;
@@ -16,6 +17,7 @@ void init(Population* p, int _num_pop, int _num_genes)
 	p->total_fitness 	= 0.0;
 	p->num_pop 			= _num_pop;
 	p->num_genes 		= _num_genes;
+	p->fitness_type		= _fitness_type;
 
 	if(p->num_genes % 8 == 0) //well aligned
 	{
@@ -120,7 +122,7 @@ void regenerate(Population* p, int start)
 		{
 			p2 = (rand() % start);
 		} while (p1 == p2);
-		
+
 		assert(p1 != p2);
 		assert(p1 < start);
 		assert(p2 < start);
@@ -147,10 +149,10 @@ void evolve(Population* p)
 		next_gen_start = kill(p, SURVIVE_RATE);
 		regenerate(p, next_gen_start);
 	}
-	
+
 	/*
-	*	Return the population buffer to a sorted state.
-	*/
+	 *	Return the population buffer to a sorted state.
+	 */
 	evaluate(p);
 	sortPop(p);
 }
@@ -164,17 +166,37 @@ void bsort(Population* p)
 	Individual tmp;
 	sorted = FALSE;
 
-	while(!sorted)
+	if(p->fitness_type == FIT_MAX)
 	{
-	sorted = TRUE;
-		for(i = 0; i < p->num_pop-1; i++)
+		while(!sorted)
 		{
-			if(cmp(p->pop[i], p->pop[i+1]) == -1) // sort in descending order
+			sorted = TRUE;
+			for(i = 0; i < p->num_pop-1; i++)
 			{
-				memcpy(&tmp, p->pop[i], sizeof(Individual));
-				memcpy(p->pop[i], p->pop[i+1], sizeof(Individual));
-				memcpy(p->pop[i+1], &tmp, sizeof(Individual));
-				sorted = FALSE;
+				if(cmp(p->pop[i], p->pop[i+1]) == -1) // sort in descending order
+				{
+					memcpy(&tmp, p->pop[i], sizeof(Individual));
+					memcpy(p->pop[i], p->pop[i+1], sizeof(Individual));
+					memcpy(p->pop[i+1], &tmp, sizeof(Individual));
+					sorted = FALSE;
+				}
+			}
+		}
+	}
+	else // minimization fitness style (FIT_MIN)
+	{
+		while(!sorted)
+		{
+			sorted = TRUE;
+			for(i = 0; i < p->num_pop-1; i++)
+			{
+				if(cmp(p->pop[i], p->pop[i+1]) == 1) // sort in ascending order
+				{
+					memcpy(&tmp, p->pop[i], sizeof(Individual));
+					memcpy(p->pop[i], p->pop[i+1], sizeof(Individual));
+					memcpy(p->pop[i+1], &tmp, sizeof(Individual));
+					sorted = FALSE;
+				}
 			}
 		}
 	}

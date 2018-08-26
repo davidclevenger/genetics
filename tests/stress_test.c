@@ -13,7 +13,7 @@ int main()
 {
 	int i;
 	Population p;
-	init(&p, POP_SIZE, NUM_GENES);
+	init(&p, POP_SIZE, NUM_GENES, FIT_MAX);
 	
 	for(i = 0; i < POP_SIZE; i++)
 	{

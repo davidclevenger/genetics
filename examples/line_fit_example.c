@@ -6,7 +6,7 @@
 #define NUM_GENES 10
 
 /*
-* The goal of this example is to fit the line 'y = 2x - 1'.
+* The goal of this example is to fit the line 'y = 2x - 2'.
 * A static array of inputs will be used to judge how well the model picks
 * parameters compared to the ideal result.
 *
@@ -18,19 +18,19 @@
 * Slope guesses(m):			[-2, -1, 0, 1, 2] (bits 0-4)
 * Y-intercept guesses(b):	[-2, -1, 0, 1, 2] (bits 5-9)
 *
-* Over time, the fittest individual(s) should have bits 4 and 6 set.
+* Over time, the fittest individual(s) should have bits 4 and 5 set.
 * All other bits should be unset(0).
 */
 
 
 /*
-* The fitness function will be the inverse sum of squared error(SSE) between calculated
-* and ideal results ( 1 / ((y* - y)^2) ).
+* The fitness function will be the inverse sum of error(SOE) between calculated
+* and ideal results ( 1 / (y* - y) ).
 */
 double fitness(Individual* ind)
 {
 	int slope, y_int, i;
-  	double fit = 0, soe = 0;
+  	double soe = 0;
 
 	//slopes
   	if(get_gene(ind, 0))
@@ -56,7 +56,6 @@ double fitness(Individual* ind)
   	if(get_gene(ind, 9))
 		y_int = 2;
 
-
 	double inputs[7] = {-2, 5, 7, 8, 0, 45, -11};
 	double ideal[7] = {-6, 8, 12, 14, -2, 88, -24};
 
@@ -65,16 +64,14 @@ double fitness(Individual* ind)
 		soe += (inputs[i] * slope + y_int) - ideal[i];
 	}
 
-	fit = 1 / soe;
-
-  return fit;
+  return soe;
 }
 
 int main()
 {
 	int i;
 	Population p;
-	init(&p, POP_SIZE, NUM_GENES);
+	init(&p, POP_SIZE, NUM_GENES, FIT_MIN);
 	for(i = 0; i < POP_SIZE; i++)
 	{
 		setup(p.pop[i]);

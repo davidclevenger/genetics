@@ -9,6 +9,9 @@
 
 #include "individual.h"
 
+#define FIT_MIN 0
+#define FIT_MAX 1
+
 #define SURVIVE_RATE 0.5
 #define ROUND 1e-9
 #define MAX_ITER 100
@@ -23,13 +26,13 @@ typedef struct
 	int num_pop;
 	int num_genes;
 	int mem_needed;
-	char pad[4];
+	int fitness_type;
 
 } Population;
 
 /*	Population memory utility */
 
-void init(Population*, int, int); // p, _num_pop, _num_genes
+void init(Population*, int, int, int); // p, _num_pop, _num_genes, _fitness_type
 void deinit(Population*); // p
 
 /*	Population functional */
