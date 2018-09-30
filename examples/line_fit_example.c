@@ -61,7 +61,7 @@ double fitness(Individual* ind)
 
 	for(i = 0; i < 7; i++)
 	{
-		soe += (inputs[i] * slope + y_int) - ideal[i];
+		soe += fabs((inputs[i] * slope + y_int) - ideal[i]);
 	}
 
   return soe;
