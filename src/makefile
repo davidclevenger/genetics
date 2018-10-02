@@ -1,5 +1,8 @@
 CC = gcc -std=c99
 CFLAGS = -Wall -Wpedantic -Wextra -g
+
+# Coverage flags
+CFLAGS += -fprofile-arcs -ftest-coverage
 COV = -coverage
 
 
@@ -11,5 +14,6 @@ individual.o: individual.h individual.c
 darwin.o: darwin.h darwin.c
 	$(CC) $(CFLAGS) -c darwin.h darwin.c
 
+.PHONY:
 clean:
-	rm -rf *.o *.gch
+	rm -rf *.o *.gch *.gcno *.gcda *.gcov

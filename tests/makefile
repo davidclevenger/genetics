@@ -1,6 +1,9 @@
 CC = gcc -std=c99
 CFLAGS = -Wall -Wpedantic -Wextra -g
 
+# Coverage flags
+CFLAGS += -fprofile-arcs -ftest-coverage
+
 SRC = ../src
 SRCS = $(SRC)/darwin.o $(SRC)/individual.o
 
@@ -20,4 +23,4 @@ $(PROGS): %: %.o $(SRCS)
 .PHONY:
 clean:
 	rm -rf $(OBJS) $(PROGS)
-	rm -rf *.o 
+	rm -rf *.o *.gcno *.gcda *.gcov

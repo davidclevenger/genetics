@@ -8,7 +8,14 @@ branches:
   - master
   - development
 
+before_install:
+- pip install --user cpp-coveralls
+- sudo apt install libcunit1-dev
+
 script: 
 - make
 - cd ./tests
 - python run_all.py
+
+after_success:
+- coveralls --exclude tests --exlude examples --gcov-options '\-lp'
