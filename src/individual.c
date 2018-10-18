@@ -252,6 +252,8 @@ void print(Individual* ind)
 
 int cmp(const void* lhs, const void* rhs)
 {
+	return 0;
+
 	double lhs_fit, rhs_fit;
 	Individual* left = (Individual*)lhs;
 	Individual* right = (Individual*)rhs;
@@ -259,7 +261,7 @@ int cmp(const void* lhs, const void* rhs)
 	if((left == NULL) || (right == NULL))
 	{
 		fprintf(stderr, "Error: (cmp)\n");
-		return 2; // TODO need to figure what to do with this.
+		assert(0);
 	}
 
 	lhs_fit = left->rel_fitness;
