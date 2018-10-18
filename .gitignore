@@ -12,3 +12,9 @@ examples/*_example
 src/*.gcda
 src/*.gcno
 src/*.gcov
+tests/*.gcda
+tests/*.gcno
+tests/*.gcov
+examples/*.gcda
+examples/*.gcno
+examples/*.gcov
