@@ -9,13 +9,16 @@
 
 #include "individual.h"
 
-#define FIT_MIN 0
-#define FIT_MAX 1
-
 #define SURVIVE_RATE 0.5
 #define ROUND 1e-9
 #define MAX_ITER 100
 #define MUTATION_RATE 0.1
+
+typedef enum fitness_type
+{
+    FIT_MIN,
+    FIT_MAX
+} FitnessType;
 
 typedef struct
 {
@@ -32,16 +35,16 @@ typedef struct
 
 /*	Population memory utility */
 
-void init(Population*, int, int, int); // p, _num_pop, _num_genes, _fitness_type
+void init(Population*, int, int, FitnessType); // p, _num_pop, _num_genes, _fitness_type
 void deinit(Population*); // p
 
 /*	Population functional */
 
-void generate(Population*); // p
-void evaluate(Population*); // p
-void sortPop(Population*); // p
-int kill(Population*, double); // p, survival_rate
-void regenerate(Population*, int); // p, start
+static void generate(Population*); // p
+static void evaluate(Population*); // p
+static void sortPop(Population*); // p
+static int kill(Population*, double); // p, survival_rate
+static void regenerate(Population*, int); // p, start
 
 void evolve(Population*); // p
 

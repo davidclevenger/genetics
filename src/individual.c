@@ -1,12 +1,20 @@
+#include <assert.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+
 #include "individual.h"
 
-void individual_init(Individual* ind, int _num_genes)
+#define RAND_LOW_PRECISION() ((rand() % 10000) / 10000.0)
+
+void individual_init(Individual* ind, int _num_genes_bytes)
 {
 	if(ind == NULL)
 	{
 		return;
 	}
-	if(_num_genes <= 0)
+
+	if( _num_genes_bytes <= 0 )
 	{
 		fprintf(stderr, "Invalid Paramater Error: (individual_init)\n");
 		return;
@@ -15,24 +23,15 @@ void individual_init(Individual* ind, int _num_genes)
 	ind->genes = NULL;
 	ind->raw_fitness = 0;
 	ind->rel_fitness = 0;
-	ind->num_genes = _num_genes;
-	ind->block_size = 0;
+	ind->num_genes = _num_genes_bytes * 8;
+	ind->block_size = _num_genes_bytes;
 	
 	/*
 	*	Check if number of genes is well aligned with byte width.
 	*	If not, add 8 to round up the next byte.
 	*/
 
-	if(ind->num_genes % 8 == 0)
-	{
-		ind->block_size = (ind->num_genes) >> 3;
-	}
-	else
-	{
-		ind->block_size = ((ind->num_genes) + 8) >> 3;
-	}
-
-	ind->genes = (unsigned char*)malloc(ind->block_size);
+	ind->genes = (unsigned char*) malloc( ind->block_size );
 	if(ind->genes == NULL)
 	{
 		fprintf(stderr, "Malloc error: (individual_init)\n");
@@ -44,7 +43,7 @@ void individual_init(Individual* ind, int _num_genes)
 
 void individual_deinit(Individual* ind)
 {
-	if(ind->genes != NULL)
+	if( ind->genes != NULL )
 	{
 		free(ind->genes);
 	}
@@ -119,6 +118,37 @@ int get_gene(Individual* ind, int raw_idx)
 	}
 }
 
+/* get char from individual offset by *idx* bytes */
+char get_char(Individual* ind, int idx)
+{
+    return ind->genes[idx];
+}
+
+
+/* get int from individual offset by *idx* bytes */
+int get_int(Individual* ind, int idx)
+{
+    unsigned char* off_buf = ind->genes + idx;
+    int* dub_buf = (int*) off_buf;
+    return *dub_buf;
+}
+
+/* get double from individual offset by *idx* bytes */
+double get_double(Individual* ind, int idx)
+{
+    unsigned char* off_buf = ind->genes + idx;
+    double* dub_buf = (double*) off_buf;
+    return *dub_buf;
+}
+
+/* get struct from individual offset by *idx* bytes */
+void* get_struct(Individual* ind, int idx)
+{
+    unsigned char* off_buf = ind->genes + idx;
+    return (void*) off_buf;
+}
+
+/* randomly generate an individual's genes */
 void setup(Individual* ind)
 {
 	int raw_idx, proc_idx, block_idx;

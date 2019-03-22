@@ -1,11 +1,5 @@
-#ifndef __INDIVIDUAL_H__
-#define __INDIVIDUAL_H__
-
-#include<stdio.h>
-#include<stdlib.h>
-#include<string.h>
-
-#define RAND_LOW_PRECISION() ((rand() % 10000) / 10000.0)
+#ifndef __INDIVIDUAL_H
+#define __INDIVIDUAL_H
 
 typedef struct
 {
@@ -24,6 +18,12 @@ void individual_deinit(Individual*); // ind
 void set_gene(Individual*, int); // ind, idx
 void clear_gene(Individual*, int); // ind, idx
 int get_gene(Individual*, int); // ind, idx
+
+char get_char(Individual*, int); // ind, idx
+int get_int(Individual*, int); // ind, idx
+double get_double(Individual*, int); // ind, idx
+void* get_struct(Individual*, int); // ind, idx
+
 
 /*	Individual functional */
 

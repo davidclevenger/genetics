@@ -1,34 +1,27 @@
 #include "darwin.h"
 
-void init(Population* p, int _num_pop, int _num_genes, int _fitness_type)
+void init(Population* p, int _num_pop, int _num_genes_bytes, FitnessType _fitness_type)
 {
 	int i;
-
 	srand(time(NULL));
 
-	if(_num_pop <= 0 || _num_genes <= 0 ||
-	(_fitness_type != FIT_MIN && _fitness_type != FIT_MAX) )
+    /* check for valid paramaters */
+
+	if( _num_pop <= 0 || _num_genes_bytes <= 0 )
 	{
 		printf("Error: (init) - invalid parameters\n");
 		return;
 	}
 
+    /* initialize fields */
+
 	p->pop				= NULL;
 	p->total_fitness 	= 0.0;
 	p->num_pop 			= _num_pop;
-	p->num_genes 		= _num_genes;
+	p->num_genes 		= _num_genes_bytes;
 	p->fitness_type		= _fitness_type;
 
-	if(p->num_genes % 8 == 0) //well aligned
-	{
-		p->mem_needed = ( p->num_genes >> 3 ) * p->num_pop;
-	}
-	else
-	{
-		p->mem_needed = (( p->num_genes + 8 ) >> 3) * p->num_pop;
-	}
-
-	p->pop = (Individual**)malloc((p->num_pop) * sizeof(Individual*));
+	p->pop = (Individual**) malloc( (p->num_pop) * sizeof(Individual*) );
 	if(p->pop == NULL)
 	{
 		fprintf(stderr, "Malloc failure: (init)\n");
@@ -38,7 +31,7 @@ void init(Population* p, int _num_pop, int _num_genes, int _fitness_type)
 	for(i = 0; i < p->num_pop; i++)
 	{
 		p->pop[i] = NULL;
-		p->pop[i] = (Individual*)malloc(sizeof(Individual));
+		p->pop[i] = (Individual*) malloc( sizeof(Individual) );
 		if(p->pop[i] == NULL)
 		{
 			fprintf(stderr, "Malloc error: (init)\n");
@@ -46,12 +39,18 @@ void init(Population* p, int _num_pop, int _num_genes, int _fitness_type)
 		}
 	}
 
+    /* generate the population */
+
 	generate(p);
 }
 
 void deinit(Population* p)
 {
 	int i;
+
+    if( p == NULL )
+        return;
+
 	for(i = 0; i < p->num_pop; i++)
 	{
 		if(p->pop[i] != NULL)
@@ -136,6 +135,7 @@ void evolve(Population* p)
 {
 	int run = MAX_ITER;
 	int next_gen_start;
+
 	if(p == NULL)
 	{
 		fprintf(stderr, "Error: (evolve)\n");
@@ -150,9 +150,8 @@ void evolve(Population* p)
 		regenerate(p, next_gen_start);
 	}
 
-	/*
-	 *	Return the population buffer to a sorted state.
-	 */
+	/* Return the population buffer to a sorted state */
+
 	evaluate(p);
 	sortPop(p);
 }

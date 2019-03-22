@@ -1,7 +1,7 @@
 #include "darwin.h"
 
 #define POP_SIZE 10000
-#define NUM_GENES 100
+#define NUM_GENES_BYTES 16
 
 // function stub (unused, but required)
 double fitness(Individual* ind)
@@ -13,7 +13,7 @@ int main()
 {
 	int i;
 	Population p;
-	init(&p, POP_SIZE, NUM_GENES, FIT_MAX);
+	init(&p, POP_SIZE, NUM_GENES_BYTES, FIT_MAX);
 	
 	for(i = 0; i < POP_SIZE; i++)
 	{
